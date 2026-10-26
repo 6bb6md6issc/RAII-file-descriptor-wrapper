@@ -1,0 +1,4 @@
+/Users/kaiwenhu/Downloads/RAII file descriptor wrapper/build/CMakeFiles/UniqueFd.dir
+/Users/kaiwenhu/Downloads/RAII file descriptor wrapper/build/CMakeFiles/unique_fd_demo.dir
+/Users/kaiwenhu/Downloads/RAII file descriptor wrapper/build/CMakeFiles/edit_cache.dir
+/Users/kaiwenhu/Downloads/RAII file descriptor wrapper/build/CMakeFiles/rebuild_cache.dir

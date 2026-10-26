@@ -1,0 +1,2 @@
+/usr/bin/ar qc libUniqueFd.a CMakeFiles/UniqueFd.dir/src/unique_fd.cpp.o
+/usr/bin/ranlib libUniqueFd.a
