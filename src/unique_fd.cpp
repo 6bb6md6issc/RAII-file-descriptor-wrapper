@@ -1,53 +1,35 @@
 #include <fcntl.h>
 #include <sys/socket.h>
 #include <errno.h>
+#include <unistd.h>
 
-export module UniqueFd
+#include "sys/unique_fd.hpp"
 
-export class UniqueFd {
-public:
-    explicit UniqueFd(int fd = -1) nonexcept;
-    UniqueFd(UniqueFd&) = delete;
-    UniqueFd& operator=() = delete;
+using namespace sys;
 
-    [[nodiscard]] int get() const noexcept;
-    [[nodiscard]] bool valid() const noexcept;
-    [[nodiscard]] int release() noexcept;
-
-    ~UniqueFd();
-
-private:
-    int file_descriptor;
-}
-
-UniqueFd::UniqueFd(int fd = -1)
+UniqueFd::UniqueFd(int fd) noexcept
     : file_descriptor{fd} {}
 
-UniqueFd::get() 
+int UniqueFd::get() const noexcept
 {
-    return this.file_descriptor;
+    return file_descriptor;
 }
 
-UniqueFd::valid()
+bool UniqueFd::valid() const noexcept
 {
-    if(fcntl(this.file_descriptor, F_GETFD) < 0) {
-        if (errno == EBADF) {
-            return false;
-        }
-    }
-    return true;
+    return file_descriptor != -1;;
 }
 
-UniqueFd::release()
+int UniqueFd::release() noexcept 
 {
-    int original_fd = this.unique_fd == -1 ? -1 : this.unique_fd;
-    this.unique_fd = -1;
+    int original_fd = file_descriptor == -1 ? -1 : file_descriptor;
+    file_descriptor = -1;
     return original_fd;
 }
 
 UniqueFd::~UniqueFd()
 {
-    if (this.valid()) {
-        close(this.unique_fd);
+    if (file_descriptor == -1) {
+        close(file_descriptor);
     }
 }
