@@ -5,8 +5,11 @@ namespace sys {
 class UniqueFd {
 public:
     explicit UniqueFd(int fd = -1) noexcept;
-    UniqueFd(UniqueFd&) = delete;
+    UniqueFd(const UniqueFd&) = delete;
     UniqueFd& operator=(const UniqueFd&) = delete;
+    UniqueFd(UniqueFd&& original_fd) noexcept;
+    UniqueFd& operator=(UniqueFd&& original_fd) noexcept;
+
 
     [[nodiscard]] int get() const noexcept;
     [[nodiscard]] bool valid() const noexcept;
